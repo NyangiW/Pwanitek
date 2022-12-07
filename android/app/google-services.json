@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "790397151334",
+    "project_id": "kutoa-9b354",
+    "storage_bucket": "kutoa-9b354.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:790397151334:android:31a6fa70c5360c6e9de5a7",
+        "android_client_info": {
+          "package_name": "com.example.kutoa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "790397151334-sg60eeaihjrma5crmrj0h6g22u5as5a1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnSSReRwSXl6Z4eXzkkkvBREtcTx7yayE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "790397151334-sg60eeaihjrma5crmrj0h6g22u5as5a1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
