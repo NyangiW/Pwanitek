@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:kutoa/main.dart';
 import 'package:kutoa/screens/donation.dart';
 import 'package:kutoa/screens/login.dart';
+import 'package:kutoa/screens/signup.dart';
 import 'package:kutoa/widgets/donation1.dart';
 
 class Intro extends StatelessWidget {
@@ -23,7 +24,7 @@ class Intro extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("images/main.jpg"), fit: BoxFit.cover),
+                image: AssetImage("images/dash.jpg"), fit: BoxFit.cover),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -66,7 +67,7 @@ class Intro extends StatelessWidget {
                       foreground: Paint()
                         ..style = PaintingStyle.stroke
                         ..strokeWidth = 3
-                        ..color = Colors.white,
+                        ..color = Colors.black,
                     ),
                   ),
                   SizedBox(height: 5),
@@ -74,7 +75,7 @@ class Intro extends StatelessWidget {
                     "Donating and Receiving",
                     style: TextStyle(
                       fontSize: 28,
-                      color: Colors.white,
+                      color: Colors.black
                     ),
                   ),
                   SizedBox(height: 5),
@@ -85,13 +86,13 @@ class Intro extends StatelessWidget {
                       foreground: Paint()
                         ..style = PaintingStyle.stroke
                         ..strokeWidth = 3
-                        ..color = Colors.white,
+                        ..color = Colors.black,
                     ),
                   ),
                   SizedBox(height: 10),
                   Text(
                     "Giving does not only preceede receiving;it is the reason for it. It is in giving that we receive",
-                    style: TextStyle(fontSize: 20, color: Colors.white70),
+                    style: TextStyle(fontSize: 20, color: Colors.black),
                   ),
                 ],
               ),
@@ -129,7 +130,7 @@ class Intro extends StatelessWidget {
                                   RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                       side: BorderSide(color: Colors.orange)))),
-                      onPressed: () {Get.to(()=> Login());
+                      onPressed: () {Get.to(()=> Signup());
                       }),
                 )
               ]),

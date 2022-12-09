@@ -2,10 +2,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:kutoa/firebase_options.dart';
 import 'package:kutoa/screens/intro.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'controllers/main_bindings.dart';
+
+Future<void> main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -15,6 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      initialBinding: MainBinding(),
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(

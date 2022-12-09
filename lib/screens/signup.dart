@@ -1,24 +1,23 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kutoa/screens/donation.dart';
-import 'package:kutoa/screens/intro.dart';
-import 'package:kutoa/screens/signup.dart';
+import 'package:kutoa/screens/login.dart';
 
 import '../controllers/auth_controller.dart';
-import '../utils/utils.dart';
+import '../utils/utils.dart'; 
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
-
-  @override
-  State<Login> createState()=> _LoginState();
+class Signup extends StatefulWidget {
+  const Signup({Key? key}) : super(key: key);
+   @override
+  State<Signup> createState() => _SignUpState();
 }
-
-class _LoginState extends State<Login>{
+class _SignUpState extends State<Signup> {
   final TextEditingController _emailController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
 
+  final TextEditingController _nameController = TextEditingController();
+
+  final TextEditingController _LocationController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,66 +27,41 @@ class _LoginState extends State<Login>{
         backgroundColor: Colors.blueAccent,
         //text
         title: Center(
-          child: Text("Login here!",
+          child: Text("Signup here!",
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.w200,
                 color: Colors.white,
               )),
         ),
-      ),
-      body: Container(
-        //background image
+    ),
+    body: Container(
+      //background image
         padding: EdgeInsets.all(20),
         width: Get.width,
         height: Get.height,
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("images/login.jpg"), fit: BoxFit.cover),
+              image: AssetImage("images/sinup.jpg"), fit: BoxFit.cover),
         ),
-        //image
         child: Column(
           children: [
-            Container(
-              width: Get.width * .3,
-              height: Get.height * .3,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("images/login.png"),
+            //Textfield
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: TextField(
+                decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue)),
+                  labelText: 'Enter Name',
+                  hintText: "Enter Two Names",
                 ),
+                 controller: _nameController,
               ),
             ),
             //space
             SizedBox(
-              height: 10,
-            ),
-            //text
-            Text(
-              "Welcome back!",
-              style: TextStyle(
-                backgroundColor: Colors.white10,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            //space
-            SizedBox(
-              height: 10,
-            ),
-            //text
-            Text(
-              "Login to your account",
-              style: TextStyle(
-                backgroundColor: Colors.white10,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.white24,
-              ),
-            ),
-            //space
-            SizedBox(
-              height: 10,
+              height: 20,
             ),
             //Textfield
             Padding(
@@ -96,14 +70,13 @@ class _LoginState extends State<Login>{
                 decoration: InputDecoration(
                   enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.blue)),
-                  labelText: 'Enter email',
-                  hintText: "Enter vaild email",
+                  labelText: 'Enter Email',
+                  hintText: "Enter vaild Email",
                 ),
                  controller: _emailController,
-                  obscureText: true,
               ),
             ),
-            //space
+           //space
             SizedBox(
               height: 20,
             ),
@@ -118,7 +91,23 @@ class _LoginState extends State<Login>{
                   hintText: "Enter vaild password",
                 ),
                  controller: _passwordController,
-                  obscureText: true,
+              ),
+            ),
+             //space
+            SizedBox(
+              height: 20,
+            ),
+            //Textfield
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: TextField(
+                decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue)),
+                  labelText: 'Enter Location',
+                  hintText: "Enter Current Location",
+                ),
+                 controller: _LocationController,
               ),
             ),
             //space
@@ -126,7 +115,7 @@ class _LoginState extends State<Login>{
               height: 30,
             ),
             TextButton(
-                child: Text("Log in".toUpperCase(),
+                child: Text("Sign Up".toUpperCase(),
                     style: TextStyle(fontSize: 14)),
                 style: ButtonStyle(
                     padding: MaterialStateProperty.all<EdgeInsets>(
@@ -141,21 +130,27 @@ class _LoginState extends State<Login>{
                 if (_emailController.text.trim().isEmpty ||
                     !_emailController.text.trim().isEmail) {
                   Utils.showError("Please Enter valid email!");
-                } else if (_passwordController.text.trim().isEmpty) {
+                } else if (_passwordController.text.trim().isEmpty ||
+                    _nameController.text.trim().isEmpty ||
+                    _LocationController.text.trim().isEmpty) {
                   Utils.showError("No field should be empty!");
                 } else {
-                  await AuthController.to.login(_emailController.text.trim(),
-                      _passwordController.text.trim());
-                }
-              },
-
-            ),
-                  
-                  SizedBox(
+                  AuthController.to.register(
+                      _emailController.text.trim(),
+                      _passwordController.text.trim(),
+                      _nameController.text.trim(),
+                      _LocationController.text.trim());
+                }},),
+              //space
+            SizedBox(
+              height: 30,
+            ), 
+             //space
+            SizedBox(
               height: 30,
             ), 
               TextButton(
-                child: Text("Do not have an account? Sign up".toUpperCase(),
+                child: Text("Already have an account? Log in".toUpperCase(),
                     style: TextStyle(fontSize: 14)),
                 style: ButtonStyle(
                     padding: MaterialStateProperty.all<EdgeInsets>(
@@ -167,9 +162,12 @@ class _LoginState extends State<Login>{
                             borderRadius: BorderRadius.circular(10),
                             side: BorderSide(color: Colors.blue)))),
                 onPressed: () {
-                  Get.to(() => Signup());
+                  Get.to(() => Login());
                 }), 
-      
-      ],),),);
+          ],
+        ),
+    ),
+   
+    );
   }
 }

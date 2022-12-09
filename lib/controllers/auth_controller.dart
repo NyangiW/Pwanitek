@@ -1,9 +1,9 @@
-import 'dart:html';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:kutoa/screens/login.dart';
 import 'package:get/get.dart';
+import 'package:kutoa/screens/landing.dart';
+import 'package:kutoa/screens/login.dart';
 
 import '../screens/intro.dart';
 import '../utils/utils.dart';
@@ -45,7 +45,7 @@ class AuthController extends GetxController {
       firebaseUserData.value.addAll(
           fsUser.data() == null ? {} : fsUser.data() as Map<String, dynamic>);
       update();
-      Get.offAll(() => Intro());
+      Get.offAll(() => Landing());
       Utils.dismissLoader();
     }
   }
@@ -63,7 +63,7 @@ class AuthController extends GetxController {
         if (!fsUser.exists) {
           await users
               .doc(user.uid)
-              .set({"name": "$name", "Location": "$Location", "email": "$email"});
+              .set({"name": "$name", "password": "$password", "email": "$email"});
         }
         Utils.showSuccess("Signup Successful!");
         Utils.dismissLoader();
