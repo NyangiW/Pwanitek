@@ -4,10 +4,11 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:kutoa/firebase_options.dart';
 import 'package:kutoa/screens/intro.dart';
+import 'package:kutoa/screens/landing.dart';
 
 import 'controllers/main_bindings.dart';
 
-Future<void> main() async{
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -27,12 +28,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Intro (),
+      home: const Landing(),
       // here
-  navigatorObservers: [FlutterSmartDialog.observer],
-  // here
-  builder: FlutterSmartDialog.init(),
+      navigatorObservers: [FlutterSmartDialog.observer],
+      // here
+      builder: FlutterSmartDialog.init(),
     );
   }
 }
-

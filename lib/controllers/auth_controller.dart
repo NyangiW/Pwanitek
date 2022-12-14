@@ -37,7 +37,7 @@ class AuthController extends GetxController {
   _setInitialScreen(User? user) async {
     if (user == null) {
       // if the user is not found then the user is navigated to the Register Screen
-      Get.offAll(() => const Login());
+      Get.offAll(() => const Landing());
     } else {
       // if the user exists and logged in the the user is navigated to the Dashboard Screen
       Utils.showLoading(message: "Fetching Profile...");
@@ -45,7 +45,7 @@ class AuthController extends GetxController {
       firebaseUserData.value.addAll(
           fsUser.data() == null ? {} : fsUser.data() as Map<String, dynamic>);
       update();
-      Get.offAll(() => Landing());
+      Get.offAll(() => Intro());
       Utils.dismissLoader();
     }
   }
