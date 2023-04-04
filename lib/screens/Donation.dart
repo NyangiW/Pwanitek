@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kutoa/screens/intro.dart';
 
 import '../widgets/donation1.dart';
 import 'donation1_detail.dart';
@@ -103,7 +104,7 @@ class Donation extends StatelessWidget {
                 Expanded(
                   child: Donation1(
                     onClick: () {},
-                    img: 'images/dashboard1.jpg', 
+                    img: 'images/dashboard1.jpg',
                     title: 'Blue Jeans(Female)\n Size Small',
                   ),
                 ),
@@ -111,12 +112,13 @@ class Donation extends StatelessWidget {
                   width: 10,
                 ),
                 Expanded(
-                  child: Donation1( 
+                  child: Donation1(
                     onClick: () {
                       Get.to(() => Donation1Detail());
                     },
                     img: 'images/dashboard2.jpg',
-                    title: 'Blue Jeans(Male)\n Size Medium',),
+                    title: 'Blue Jeans(Male)\n Size Medium',
+                  ),
                 ),
               ],
             ),
@@ -132,12 +134,20 @@ class Donation extends StatelessWidget {
         selectedFontSize: 14,
         unselectedFontSize: 14,
         onTap: (value) {
+          if (value == 0) {
+            Get.to(() => Intro());
+          } else if (value == 1) {
+            Get.to(() => Donation1Detail());
+          } else if (value == 2) {
+            Get.to(() => Donation());
+          }
           //Respond to item press.
         },
         items: [
           BottomNavigationBarItem(
               icon: Icon(Icons.home_rounded), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite_outline_rounded), label: "Favourite"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.favorite_outline_rounded), label: "Favourite"),
           BottomNavigationBarItem(
               icon: Icon(Icons.location_on), label: "Places"),
           BottomNavigationBarItem(

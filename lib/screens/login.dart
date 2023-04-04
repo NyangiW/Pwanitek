@@ -12,10 +12,10 @@ class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
   @override
-  State<Login> createState()=> _LoginState();
+  State<Login> createState() => _LoginState();
 }
 
-class _LoginState extends State<Login>{
+class _LoginState extends State<Login> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -99,8 +99,7 @@ class _LoginState extends State<Login>{
                   labelText: 'Enter email',
                   hintText: "Enter vaild email",
                 ),
-                 controller: _emailController,
-                  obscureText: true,
+                controller: _emailController,
               ),
             ),
             //space
@@ -117,8 +116,8 @@ class _LoginState extends State<Login>{
                   labelText: 'Enter Password',
                   hintText: "Enter vaild password",
                 ),
-                 controller: _passwordController,
-                  obscureText: true,
+                controller: _passwordController,
+                obscureText: true,
               ),
             ),
             //space
@@ -126,18 +125,18 @@ class _LoginState extends State<Login>{
               height: 30,
             ),
             TextButton(
-                child: Text("Log in".toUpperCase(),
-                    style: TextStyle(fontSize: 14)),
-                style: ButtonStyle(
-                    padding: MaterialStateProperty.all<EdgeInsets>(
-                        EdgeInsets.all(15)),
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.yellow),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            side: BorderSide(color: Colors.blue)))),
-                onPressed: () async {
+              child:
+                  Text("Log in".toUpperCase(), style: TextStyle(fontSize: 14)),
+              style: ButtonStyle(
+                  padding:
+                      MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(15)),
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.yellow),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          side: BorderSide(color: Colors.blue)))),
+              onPressed: () async {
                 if (_emailController.text.trim().isEmpty ||
                     !_emailController.text.trim().isEmail) {
                   Utils.showError("Please Enter valid email!");
@@ -148,13 +147,12 @@ class _LoginState extends State<Login>{
                       _passwordController.text.trim());
                 }
               },
-
             ),
-                  
-                  SizedBox(
+
+            SizedBox(
               height: 30,
-            ), 
-              TextButton(
+            ),
+            TextButton(
                 child: Text("Do not have an account? Sign up".toUpperCase(),
                     style: TextStyle(fontSize: 14)),
                 style: ButtonStyle(
@@ -168,8 +166,10 @@ class _LoginState extends State<Login>{
                             side: BorderSide(color: Colors.blue)))),
                 onPressed: () {
                   Get.to(() => Signup());
-                }), 
-      
-      ],),),);
+                }),
+          ],
+        ),
+      ),
+    );
   }
 }

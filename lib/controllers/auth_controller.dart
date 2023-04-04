@@ -1,7 +1,7 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:kutoa/controllers/main_controller.dart';
 import 'package:kutoa/screens/landing.dart';
 import 'package:kutoa/screens/login.dart';
 
@@ -47,6 +47,8 @@ class AuthController extends GetxController {
       update();
       Get.offAll(() => Intro());
       Utils.dismissLoader();
+      MainController.to.donationRequest
+          .bindStream(MainController.to.donationRequestStream());
     }
   }
 
@@ -54,16 +56,15 @@ class AuthController extends GetxController {
       String email, String password, String name, String location) async {
     Utils.showLoading(message: "Creating account…");
     try {
-      await auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      await (auth as FirebaseAuth)
+          .createUserWithEmailAndPassword(email: email, password: password);
       var user = auth.currentUser;
       if (user != null) {
         var fsUser = await users.doc(user.uid).get();
 
         if (!fsUser.exists) {
-          await users
-              .doc(user.uid)
-              .set({"name": "$name", "password": "$password", "email": "$email"});
+          await users.doc(user.uid).set(
+              {"name": "$name", "password": "$password", "email": "$email"});
         }
         Utils.showSuccess("Signup Successful!");
         Utils.dismissLoader();
@@ -76,6 +77,7 @@ class AuthController extends GetxController {
         return false;
       }
     } catch (firebaseAuthException) {
+      print((firebaseAuthException as FirebaseAuthException).message);
       Utils.showError("Signup Failed!");
       Utils.dismissLoader();
       return false;

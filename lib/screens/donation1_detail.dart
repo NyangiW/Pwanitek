@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kutoa/screens/donation.dart';
+import 'package:kutoa/widgets/donation1.dart';
 
-class Donation1Detail extends StatelessWidget {
+class Donation1Detail extends StatefulWidget {
   const Donation1Detail({Key? key}) : super(key: key);
 
+  @override
+  State<Donation1Detail> createState() => _Donation1DetailState();
+}
+
+class _Donation1DetailState extends State<Donation1Detail> {
+  final TextEditingController _phonenumberController = TextEditingController();
+
+  final TextEditingController _locationController = TextEditingController();
+
+  final TextEditingController _nameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,9 +115,9 @@ class Donation1Detail extends StatelessWidget {
                   child: Text(
                     "Size",
                     style: TextStyle(
-                        fontSize: 25,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black38),
+                        color: Colors.black54),
                   ),
                 ),
                 SizedBox(
@@ -115,7 +127,7 @@ class Donation1Detail extends StatelessWidget {
                   child: Text(
                     "Small",
                     style: TextStyle(
-                        fontSize: 25,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,
                         color: Colors.black54),
                   ),
@@ -136,12 +148,64 @@ class Donation1Detail extends StatelessWidget {
             //Text
             Text(
               "Donated with love, this blue jeans can fit individuals ranging from 45kg-55kg\n It's a unique mensware currently in fashion",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w100),
+              style: TextStyle(),
+            ),
+            //space
+            SizedBox(
+              height: 20,
+            ),
+            //title
+            Text(
+              "Enter Your Details",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            //Space
+            SizedBox(
+              height: 20,
+            ),
+            //Textfield
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: TextField(
+                decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black87)),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black)),
+                  labelText: 'Enter Name',
+                  // hintText: "Enter official Name",
+                ),
+                controller: _nameController,
+              ),
+            ),
+            //Textfield
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: TextField(
+                decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue)),
+                  labelText: 'Enter Location',
+                ),
+                controller: _locationController,
+              ),
+            ),
+            //Textfield
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: TextField(
+                decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue)),
+                  labelText: 'Enter Phone Number',
+                ),
+                controller: _phonenumberController,
+              ),
             ),
           ],
         ),
       ),
-       //BOTTOM NAVBAR
+      //BOTTOM NAVBAR
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         backgroundColor: Color.fromRGBO(49, 48, 62, 1),
@@ -150,13 +214,18 @@ class Donation1Detail extends StatelessWidget {
         selectedFontSize: 14,
         unselectedFontSize: 14,
         onTap: (value) {
+          if (value == 0) {
+            Get.to(() => Donation());
+          } else if (value == 1) {
+            Get.to(() => Donation1Detail());
+          }
           //Respond to item press.
         },
         items: [
           BottomNavigationBarItem(
               icon: Icon(Icons.home_rounded), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite_outline_rounded), label: "Favourite"),
-
+          BottomNavigationBarItem(
+              icon: Icon(Icons.favorite_outline_rounded), label: "Favourite"),
         ],
       ),
     );

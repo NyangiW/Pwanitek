@@ -41,6 +41,10 @@ dependencies:
   flutter_smart_dialog: ^4.7.1
   firebase_auth: ^4.1.4
   cloud_firestore: ^4.1.0
+  image_picker: ^0.8.6+1
+  firebase_storage: ^11.0.16
+  path: ^1.8.1
+  
 
 
 dev_dependencies:
