@@ -13,6 +13,7 @@ class Landing extends StatelessWidget {
     return Scaffold(
       //body
       body: Container(
+        alignment: Alignment.center,
         padding: const EdgeInsets.all(20),
         width: Get.width,
         height: Get.height,
@@ -23,6 +24,7 @@ class Landing extends StatelessWidget {
         //text
         // ignore: prefer_const_literals_to_create_immutables
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Center(
               child: const Text(

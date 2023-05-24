@@ -1,17 +1,17 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 
-class Receive extends StatefulWidget {
-  const Receive({Key? key}) : super(key: key);
+class ReceiveDonation extends StatefulWidget {
+  const ReceiveDonation({Key? key}) : super(key: key);
 
   @override
-  State<Receive> createState() => _ReceiveState();
+  State<ReceiveDonation> createState() => _ReceiveDonationState();
 }
 
-class _ReceiveState extends State<Receive> {
+class _ReceiveDonationState extends State<ReceiveDonation> {
   //To handle form input changes
   var _formKey = GlobalKey<FormState>();
   var isLoading = false;
@@ -19,13 +19,25 @@ class _ReceiveState extends State<Receive> {
   var titleController = TextEditingController();
   var contentController = TextEditingController();
   _pickImage() async {
-    final ImagePicker _picker = ImagePicker();
-    // Pick an image
-    final XFile? pickedImage =
-        await _picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      image = pickedImage != null ? File(pickedImage.path) : null;
-    });
+    // final ImagePicker _picker = ImagePicker();
+    // // Pick an image
+    // final XFile? pickedImage =
+    //     await _picker.pickImage(source: ImageSource.gallery);
+    // setState(() {
+    //   image = pickedImage != null ? File(pickedImage.path) : null;
+    // });
+
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(type: FileType.image);
+
+    if (result != null) {
+      File pickedImage = File(result.files.single.path!);
+      setState(() {
+        image = pickedImage;
+      });
+    } else {
+      // User canceled the picker
+    }
   }
 
   @override
@@ -103,4 +115,6 @@ class _ReceiveState extends State<Receive> {
       ),
     );
   }
+
+  _submit() {}
 }

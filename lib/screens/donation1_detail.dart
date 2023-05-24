@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kutoa/screens/donation.dart';
-import 'package:kutoa/widgets/donation1.dart';
 
 class Donation1Detail extends StatefulWidget {
   const Donation1Detail({Key? key}) : super(key: key);
@@ -215,7 +213,7 @@ class _Donation1DetailState extends State<Donation1Detail> {
         unselectedFontSize: 14,
         onTap: (value) {
           if (value == 0) {
-            Get.to(() => Donation());
+            // Get.to(() => Donation());
           } else if (value == 1) {
             Get.to(() => Donation1Detail());
           }

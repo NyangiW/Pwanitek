@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kutoa/main.dart';
-import 'package:kutoa/screens/donation.dart';
+import 'package:kutoa/screens/donations.dart';
 import 'package:kutoa/screens/login.dart';
-import 'package:kutoa/screens/receive.dart';
-import 'package:kutoa/screens/signup.dart';
-import 'package:kutoa/widgets/donation1.dart';
+import 'package:kutoa/screens/receive_donation.dart';
+
+import 'make_donation.dart';
 
 class Intro extends StatelessWidget {
   const Intro({Key? key}) : super(key: key);
@@ -105,7 +105,7 @@ class Intro extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(10),
                                     side: BorderSide(color: Colors.orange)))),
                     onPressed: () {
-                      Get.to(() => Donation());
+                      Get.to(() => Donations());
                     }),
               ),
               SizedBox(width: 25),
@@ -124,7 +124,7 @@ class Intro extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(10),
                                     side: BorderSide(color: Colors.orange)))),
                     onPressed: () {
-                      Get.to(() => Receive());
+                      Get.to(() => MakeDonation());
                     }),
               )
             ]),

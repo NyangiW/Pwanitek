@@ -49,6 +49,7 @@ class AuthController extends GetxController {
       Utils.dismissLoader();
       MainController.to.donationRequest
           .bindStream(MainController.to.donationRequestStream());
+      MainController.to.donation.bindStream(MainController.to.donationStream());
     }
   }
 

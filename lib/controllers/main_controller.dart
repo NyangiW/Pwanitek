@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart';
 import '../utils/utils.dart';
@@ -26,27 +27,33 @@ class MainController extends GetxController {
     firestore = FirebaseFirestore.instance;
 
     //Reactive list
-    donation.bindStream(donationStream());
   }
 
   //creating data
-  createDonation(title, imageUrl, content) async {
+  createDonation(title, img, content, imageUrl2) async {
     Utils.showLoading(message: "Creating Donation");
     var userId = AuthController.to.firebaseUser.value?.uid;
     var donorName = AuthController.to.firebaseUser.value?.displayName;
-    try {
-      await firestore.collection('Donation').add({
-        "title": title,
-        "imageUrl": imageUrl,
-        "content": content,
-        "donorId": userId,
-        "donorName": donorName,
-        "created": Timestamp.now()
-      });
-      Utils.showSuccess("Creation Successful!");
-      Utils.dismissLoader();
-    } catch (e) {
-      Utils.showError("Creation Failed. Try again!");
+
+    var imageUrl = await uploadImage(img, imageUrl2);
+    if (imageUrl.isNotEmpty) {
+      try {
+        await firestore.collection('Donation').add({
+          "title": title,
+          "imageUrl": imageUrl,
+          "content": content,
+          "donorId": userId,
+          "donorName": donorName,
+          "created": Timestamp.now()
+        });
+        Utils.showSuccess("Creation Successful!");
+        Utils.dismissLoader();
+      } catch (e) {
+        Utils.showError("Creation Failed. Try again!");
+        Utils.dismissLoader();
+      }
+    } else {
+      Utils.showError("Image Upload Failed. Try again!");
       Utils.dismissLoader();
     }
   }
@@ -73,18 +80,43 @@ class MainController extends GetxController {
   }
 
   //updating methods
-  updateDonation(title, imageUrl, content, donorId) async {
+  updateDonation(title, img, content, imageUrl2) async {
     Utils.showLoading(message: "Updating Donation");
-    try {
-      await firestore.collection('Donation').doc(donationSelectedId).update({
-        "title": title,
-        "imageUrl": imageUrl,
-        "content": content,
-      });
-      Utils.showSuccess("Update Successful!");
-      Utils.dismissLoader();
-    } catch (e) {
-      Utils.showError("Update Failed. Try again!");
+    // try {
+    //   await firestore.collection('Donation').doc(donationSelectedId).update({
+    //     "title": title,
+    //     "imageUrl": imageUrl,
+    //     "content": content,
+    //   });
+    //   Utils.showSuccess("Update Successful!");
+    //   Utils.dismissLoader();
+    // } catch (e) {
+    //   Utils.showError("Update Failed. Try again!");
+    //   Utils.dismissLoader();
+    // }
+
+    var userId = AuthController.to.firebaseUser.value?.uid;
+    var donorName = AuthController.to.firebaseUser.value?.displayName;
+
+    var imageUrl = await uploadImage(img, imageUrl2);
+    if (imageUrl.isNotEmpty) {
+      try {
+        await firestore.collection('Donation').doc(donationSelectedId).update({
+          "title": title,
+          "imageUrl": imageUrl,
+          "content": content,
+          "donorId": userId,
+          "donorName": donorName,
+          "created": Timestamp.now()
+        });
+        Utils.showSuccess("Creation Successful!");
+        Utils.dismissLoader();
+      } catch (e) {
+        Utils.showError("Creation Failed. Try again!");
+        Utils.dismissLoader();
+      }
+    } else {
+      Utils.showError("Image Upload Failed. Try again!");
       Utils.dismissLoader();
     }
   }
@@ -135,7 +167,7 @@ class MainController extends GetxController {
   //Fetch livestream
   Stream<Map<String, dynamic>> donationStream() {
     var ref = FirebaseFirestore.instance
-        .collection('donation')
+        .collection('Donation')
         .orderBy("created")
         .snapshots();
     return ref.map((list) {
@@ -153,7 +185,7 @@ class MainController extends GetxController {
   Stream<Map<String, dynamic>> donationRequestStream() {
     var userId = AuthController.to.firebaseUser.value?.uid;
     var ref = FirebaseFirestore.instance
-        .collection('donationRequest')
+        .collection('DonationRequest')
         .where("userId", isEqualTo: userId)
         .orderBy("created")
         .snapshots();
@@ -169,15 +201,23 @@ class MainController extends GetxController {
   }
 
   //uploading image function
-  uploadImage(File image) async {
+  uploadImage(File image, imageUrl2) async {
 // Create a storage reference from our app
     final storageRef = FirebaseStorage.instance.ref();
 
-    final imageRef = storageRef.child(basename(image.path));
+    final imageRef = storageRef.child(imageUrl2);
     try {
+      // if (kIsWeb) {
+      //   await imageRef.putData(imageBytes);
+      // } else {
       await imageRef.putFile(image);
+      // }
+
+      return (await imageRef.getDownloadURL());
     } on FirebaseException catch (e) {
       print(e);
     }
+
+    return "";
   }
 }
